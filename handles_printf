@@ -1,0 +1,54 @@
+/**
+ * handle_printf - Handles the conversion specifiers 'd' and 'i'
+ * @fmt: Formatted string in which to print the arguments.
+ * @list: List of arguments to be printed.
+ *
+ * Return: Number of characters printed.
+ */
+int handle_printf(const char *fmt, va_list list)
+{
+    int printed_chars = 0;
+    int num = va_arg(list, int);
+
+    printed_chars += printf("%d", num);
+
+    return printed_chars;
+}
+
+/**
+ * _printf - Custom printf function
+ * @fmt: Formatted string in which to print the arguments.
+ * Return: Number of characters printed.
+ */
+int _printf(const char *fmt, ...)
+{
+    va_list args;
+    int printed_chars = 0;
+    int i = 0;
+
+    va_start(args, fmt);
+
+    while (fmt[i] != '\0')
+    {
+        if (fmt[i] == '%' && fmt[i + 1] == 'd')
+        {
+            printed_chars += handle_printf(fmt + i, args);
+            i += 2;
+        }
+        else if (fmt[i] == '%' && fmt[i + 1] == 'i')
+        {
+            printed_chars += handle_printf(fmt + i, args);
+            i += 2;
+        }
+        else
+        {
+            putchar(fmt[i]);
+            printed_chars++;
+            i++;
+        }
+    }
+
+    va_end(args);
+
+    return printed_chars;
+}
