@@ -49,7 +49,8 @@ int _printf(const char *format, ...)
 				character += st;
 			}
 		}
-		va_end(list);
+		format++;
 	}
+	va_end(list);
 	return (character);
 }
